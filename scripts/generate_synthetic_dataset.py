@@ -6,6 +6,21 @@ from pathlib import Path
 OUT = Path("data/generated.jsonl")
 NUM_SAMPLES = 200
 
+COMPANIES = [
+    ("TechSolutions LLC", "700 Technology Park, San Jose, CA 95110"),
+    ("Digital Innovations Corp", "2100 Enterprise Way, Mountain View, CA 94043"),
+    ("CloudNet Systems", "1234 Innovation Drive, Palo Alto, CA 94301"),
+    ("SecureLogic Inc", "500 Digital Avenue, Sunnyvale, CA 94089"),
+    ("Quantum Software Solutions", "888 Tech Boulevard, Santa Clara, CA 95051"),
+]
+
+SERVICES = [
+    ["Website development and maintenance", "Cloud infrastructure setup", "Security monitoring"],
+    ["Software development services", "System integration", "Technical support"],
+    ["Data analytics implementation", "API development", "Database management"],
+    ["Mobile app development", "DevOps automation", "Cloud migration"],
+]
+
 CLAUSE_TYPES = [
     "data_protection",
     "liability",
@@ -79,7 +94,46 @@ EXCEPTIONS = ["publicly known", "already in possession of the receiving party", 
 CAUSES = ["force majeure events", "third party delays", "regulatory approvals"]
 
 
+def generate_contract_header():
+    # Select two different companies for provider and client
+    provider, client = random.sample(COMPANIES, 2)
+    services = random.choice(SERVICES)
+    
+    # Generate dates
+    from datetime import datetime, timedelta
+    current_date = datetime.now()
+    term_months = random.choice([6, 12, 24])
+    end_date = current_date + timedelta(days=term_months * 30)
+    
+    header = f'''SERVICE AGREEMENT
+
+This Service Agreement (the "Agreement") is entered into on {current_date.strftime("%B %d, %Y")}, between:
+
+{provider[0]}
+{provider[1]}
+(hereinafter referred to as the "Provider")
+
+and
+
+{client[0]}
+{client[1]}
+(hereinafter referred to as the "Client")
+
+1. SERVICES
+1.1. The Provider agrees to provide the following services:
+{chr(10).join(f"- {service}" for service in services)}
+
+2. TERM AND TIMELINE
+2.1. Term: {term_months} months from the effective date
+2.2. Timeline:
+     - Effective Date: {current_date.strftime("%B %d, %Y")}
+     - End Date: {end_date.strftime("%B %d, %Y")}
+
+'''
+    return header
+
 def render_clause(clause_type):
+    header = generate_contract_header() if clause_type == "data_protection" else ""
     tpl = random.choice(TEMPLATES[clause_type])
     # substitute placeholders
     clause = tpl.format(
@@ -96,7 +150,7 @@ def render_clause(clause_type):
         exceptions=random.choice(EXCEPTIONS),
         causes=random.choice(CAUSES),
     )
-    return clause
+    return header + clause
 
 
 def make_completion(clause, clause_type):
