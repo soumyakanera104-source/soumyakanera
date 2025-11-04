@@ -1,56 +1,27 @@
-# -----------------------------
-# Python Environment
-# -----------------------------
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.pdb
-*.pkl
-*.log
-
-# -----------------------------
-# Virtual Environments
-# -----------------------------
-myenv/
-.venv/
-env/
+# Python virtual environment
+myvenv/
 venv/
+ENV/
 
-# -----------------------------
-# Environment / Secrets
-# -----------------------------
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables
 .env
-.env.*
 
-# -----------------------------
-# VS Code / IDE Files
-# -----------------------------
+# IDE specific files
 .vscode/
 .idea/
-
-# -----------------------------
-# System Files
-# -----------------------------
-.DS_Store
-Thumbs.db
-
-# -----------------------------
-# PyInstaller / Build Files
-# -----------------------------
-build/
-dist/
-*.spec
-
-# -----------------------------
-# Jupyter / Notebooks
-# -----------------------------
-.ipynb_checkpoints
-
-# -----------------------------
-# Cache & Temp
-# -----------------------------
-*.cache/
-*.tmp/
-*.bak
 *.swp
+*.swo
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Local development settings
+*.log
+.DS_Store
